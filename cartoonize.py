@@ -76,19 +76,15 @@ def caart(img):
     edge=cv2.Canny(output, 100, 200)
     output=cv2.cvtColor(output,cv2.COLOR_RGB2HSV)
 
-    hists = []
-
     hist,_=np.histogram(output[:,:,0],bins =np.arange(180+1))
-    hists.append(hist)
+    hists = [hist]
     hist,_=np.histogram(output[:,:,1],bins =np.arange(256+1))
     hists.append(hist)
     hist,_=np.histogram(output[:,:,2],bins =np.arange(256+1))
     hists.append(hist)
 
 
-    C=[]
-    for h in hists:
-        C.append(K_histogram(h))
+    C = [K_histogram(h) for h in hists]
     #print("centroids: {0}".format(C))
 
     output=output.reshape((-1,c))
